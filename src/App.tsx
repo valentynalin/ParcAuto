@@ -343,92 +343,92 @@ export default function App() {
                   Status Documente Parc Auto
                 </h3>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left text-[11px] table-fixed">
+                  <table className="w-full text-left text-sm table-fixed min-w-[1000px]">
                     <thead className="bg-gray-50 border-b border-gray-100">
                       <tr>
-                        <th className="px-3 py-3 font-bold text-gray-500 uppercase w-48">Vehicul</th>
-                        <th className="px-3 py-3 font-bold text-gray-500 uppercase w-40">Utilizator</th>
-                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">Rovinietă</th>
-                        <th className="px-1 py-3 font-bold text-blue-500 uppercase text-center w-12">Zile</th>
-                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">ITP</th>
-                        <th className="px-1 py-3 font-bold text-blue-500 uppercase text-center w-12">Zile</th>
-                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">RCA</th>
-                        <th className="px-1 py-3 font-bold text-blue-500 uppercase text-center w-12">Zile</th>
-                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">CASCO</th>
-                        <th className="px-1 py-3 font-bold text-blue-500 uppercase text-center w-12">Zile</th>
-                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">Revizie</th>
-                        <th className="px-1 py-3 font-bold text-blue-500 uppercase text-center w-12">Zile</th>
-                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center w-10"></th>
+                        <th className="px-4 py-4 font-bold text-gray-600 uppercase text-xs w-64">Vehicul</th>
+                        <th className="px-4 py-4 font-bold text-gray-600 uppercase text-xs w-56">Utilizator</th>
+                        <th className="px-2 py-4 font-bold text-gray-600 uppercase text-xs text-center border-l border-gray-100">Rovinietă</th>
+                        <th className="px-1 py-4 font-bold text-blue-600 uppercase text-xs text-center w-16">Zile</th>
+                        <th className="px-2 py-4 font-bold text-gray-600 uppercase text-xs text-center border-l border-gray-100">ITP</th>
+                        <th className="px-1 py-4 font-bold text-blue-600 uppercase text-xs text-center w-16">Zile</th>
+                        <th className="px-2 py-4 font-bold text-gray-600 uppercase text-xs text-center border-l border-gray-100">RCA</th>
+                        <th className="px-1 py-4 font-bold text-blue-600 uppercase text-xs text-center w-16">Zile</th>
+                        <th className="px-2 py-4 font-bold text-gray-600 uppercase text-xs text-center border-l border-gray-100">CASCO</th>
+                        <th className="px-1 py-4 font-bold text-blue-600 uppercase text-xs text-center w-16">Zile</th>
+                        <th className="px-2 py-4 font-bold text-gray-600 uppercase text-xs text-center border-l border-gray-100">Revizie</th>
+                        <th className="px-1 py-4 font-bold text-blue-600 uppercase text-xs text-center w-16">Zile</th>
+                        <th className="px-1 py-4 w-12"></th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {vehicles.map(v => (
                         <tr key={v.id} className="hover:bg-gray-50 transition-colors group">
-                          <td className="px-3 py-3 truncate">
-                            <p className="font-bold">{v.nr_inmatriculare}</p>
-                            <p className="text-[9px] text-gray-400 uppercase truncate">{v.marca_model}</p>
+                          <td className="px-4 py-4 truncate">
+                            <p className="font-bold text-gray-900">{v.nr_inmatriculare}</p>
+                            <p className="text-xs text-gray-400 font-medium uppercase truncate">{v.marca_model}</p>
                           </td>
-                          <td className="px-3 py-3 truncate">
-                            <p className="font-medium text-gray-700">{v.utilizator || '-'}</p>
+                          <td className="px-4 py-4 truncate">
+                            <p className="font-semibold text-gray-700">{v.utilizator || '-'}</p>
                           </td>
                           
                           {/* Rovinieta */}
-                          <td className="px-1 py-3 text-center border-l border-gray-50">
-                            <span className={getDateStatusClass(v.rovinieta_expiry)}>
-                              {v.rovinieta_expiry ? dayjs(v.rovinieta_expiry).format('DD.MM') : '-'}
+                          <td className="px-2 py-4 text-center border-l border-gray-50">
+                            <span className={`${getDateStatusClass(v.rovinieta_expiry)} text-sm`}>
+                              {v.rovinieta_expiry ? dayjs(v.rovinieta_expiry).format('DD.MM.YY') : '-'}
                             </span>
                           </td>
-                          <td className="px-1 py-3 text-center font-mono text-[9px] text-gray-500">
-                            {v.rovinieta_expiry ? `${dayjs(v.rovinieta_expiry).diff(dayjs(), 'day')}d` : '-'}
+                          <td className="px-1 py-4 text-center font-mono text-xs text-gray-500 bg-gray-50/30">
+                            {v.rovinieta_expiry ? `${dayjs(v.rovinieta_expiry).diff(dayjs(), 'day')}z` : '-'}
                           </td>
 
                           {/* ITP */}
-                          <td className="px-1 py-3 text-center border-l border-gray-50">
-                            <span className={getDateStatusClass(v.itp_expiry)}>
-                              {v.itp_expiry ? dayjs(v.itp_expiry).format('DD.MM') : '-'}
+                          <td className="px-2 py-4 text-center border-l border-gray-50">
+                            <span className={`${getDateStatusClass(v.itp_expiry)} text-sm`}>
+                              {v.itp_expiry ? dayjs(v.itp_expiry).format('DD.MM.YY') : '-'}
                             </span>
                           </td>
-                          <td className="px-1 py-3 text-center font-mono text-[9px] text-gray-500">
-                            {v.itp_expiry ? `${dayjs(v.itp_expiry).diff(dayjs(), 'day')}d` : '-'}
+                          <td className="px-1 py-4 text-center font-mono text-xs text-gray-500 bg-gray-50/30">
+                            {v.itp_expiry ? `${dayjs(v.itp_expiry).diff(dayjs(), 'day')}z` : '-'}
                           </td>
 
                           {/* RCA */}
-                          <td className="px-1 py-3 text-center border-l border-gray-50">
-                            <span className={getDateStatusClass(v.rca_expiry)}>
-                              {v.rca_expiry ? dayjs(v.rca_expiry).format('DD.MM') : '-'}
+                          <td className="px-2 py-4 text-center border-l border-gray-50">
+                            <span className={`${getDateStatusClass(v.rca_expiry)} text-sm`}>
+                              {v.rca_expiry ? dayjs(v.rca_expiry).format('DD.MM.YY') : '-'}
                             </span>
                           </td>
-                          <td className="px-1 py-3 text-center font-mono text-[9px] text-gray-500">
-                            {v.rca_expiry ? `${dayjs(v.rca_expiry).diff(dayjs(), 'day')}d` : '-'}
+                          <td className="px-1 py-4 text-center font-mono text-xs text-gray-500 bg-gray-50/30">
+                            {v.rca_expiry ? `${dayjs(v.rca_expiry).diff(dayjs(), 'day')}z` : '-'}
                           </td>
 
                           {/* CASCO */}
-                          <td className="px-1 py-3 text-center border-l border-gray-50">
-                            <span className={getDateStatusClass(v.casco_expiry)}>
-                              {v.casco_expiry ? dayjs(v.casco_expiry).format('DD.MM') : '-'}
+                          <td className="px-2 py-4 text-center border-l border-gray-50">
+                            <span className={`${getDateStatusClass(v.casco_expiry)} text-sm`}>
+                              {v.casco_expiry ? dayjs(v.casco_expiry).format('DD.MM.YY') : '-'}
                             </span>
                           </td>
-                          <td className="px-1 py-3 text-center font-mono text-[9px] text-gray-500">
-                            {v.casco_expiry ? `${dayjs(v.casco_expiry).diff(dayjs(), 'day')}d` : '-'}
+                          <td className="px-1 py-4 text-center font-mono text-xs text-gray-500 bg-gray-50/30">
+                            {v.casco_expiry ? `${dayjs(v.casco_expiry).diff(dayjs(), 'day')}z` : '-'}
                           </td>
 
                           {/* Revizie */}
-                          <td className="px-1 py-3 text-center border-l border-gray-50">
-                            <span className={getDateStatusClass(v.data_revizie)}>
-                              {v.data_revizie ? dayjs(v.data_revizie).format('DD.MM') : '-'}
+                          <td className="px-2 py-4 text-center border-l border-gray-50">
+                            <span className={`${getDateStatusClass(v.data_revizie)} text-sm`}>
+                              {v.data_revizie ? dayjs(v.data_revizie).format('DD.MM.YY') : '-'}
                             </span>
                           </td>
-                          <td className="px-1 py-3 text-center font-mono text-[9px] text-gray-500">
-                            {v.data_revizie ? `${dayjs(v.data_revizie).diff(dayjs(), 'day')}d` : '-'}
+                          <td className="px-1 py-4 text-center font-mono text-xs text-gray-500 bg-gray-50/30">
+                            {v.data_revizie ? `${dayjs(v.data_revizie).diff(dayjs(), 'day')}z` : '-'}
                           </td>
 
                           {/* Action */}
-                          <td className="px-1 py-3 text-center">
+                          <td className="px-1 py-4 text-center">
                             <button 
                               onClick={() => { setEditingVehicle(v); setActiveTab('add'); }}
-                              className="p-1 text-gray-400 hover:text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                              className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg opacity-0 group-hover:opacity-100 transition-all"
                             >
-                              <Edit3 className="w-3.5 h-3.5" />
+                              <Edit3 className="w-4 h-4" />
                             </button>
                           </td>
                         </tr>
