@@ -346,23 +346,24 @@ export default function App() {
                   <table className="w-full text-left text-[11px] table-fixed">
                     <thead className="bg-gray-50 border-b border-gray-100">
                       <tr>
-                        <th className="px-3 py-3 font-bold text-gray-500 uppercase w-32">Vehicul</th>
-                        <th className="px-3 py-3 font-bold text-gray-500 uppercase w-32">Utilizator</th>
-                        <th className="px-3 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">Rovinietă</th>
-                        <th className="px-2 py-3 font-bold text-blue-500 uppercase text-center">Zile</th>
-                        <th className="px-3 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">ITP</th>
-                        <th className="px-2 py-3 font-bold text-blue-500 uppercase text-center">Zile</th>
-                        <th className="px-3 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">RCA</th>
-                        <th className="px-2 py-3 font-bold text-blue-500 uppercase text-center">Zile</th>
-                        <th className="px-3 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">CASCO</th>
-                        <th className="px-2 py-3 font-bold text-blue-500 uppercase text-center">Zile</th>
-                        <th className="px-3 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">Revizie</th>
-                        <th className="px-2 py-3 font-bold text-blue-500 uppercase text-center">Zile</th>
+                        <th className="px-3 py-3 font-bold text-gray-500 uppercase w-48">Vehicul</th>
+                        <th className="px-3 py-3 font-bold text-gray-500 uppercase w-40">Utilizator</th>
+                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">Rovinietă</th>
+                        <th className="px-1 py-3 font-bold text-blue-500 uppercase text-center w-12">Zile</th>
+                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">ITP</th>
+                        <th className="px-1 py-3 font-bold text-blue-500 uppercase text-center w-12">Zile</th>
+                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">RCA</th>
+                        <th className="px-1 py-3 font-bold text-blue-500 uppercase text-center w-12">Zile</th>
+                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">CASCO</th>
+                        <th className="px-1 py-3 font-bold text-blue-500 uppercase text-center w-12">Zile</th>
+                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center border-l border-gray-100">Revizie</th>
+                        <th className="px-1 py-3 font-bold text-blue-500 uppercase text-center w-12">Zile</th>
+                        <th className="px-1 py-3 font-bold text-gray-500 uppercase text-center w-10"></th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {vehicles.map(v => (
-                        <tr key={v.id} className="hover:bg-gray-50/50 transition-colors">
+                        <tr key={v.id} className="hover:bg-gray-50 transition-colors group">
                           <td className="px-3 py-3 truncate">
                             <p className="font-bold">{v.nr_inmatriculare}</p>
                             <p className="text-[9px] text-gray-400 uppercase truncate">{v.marca_model}</p>
@@ -372,53 +373,63 @@ export default function App() {
                           </td>
                           
                           {/* Rovinieta */}
-                          <td className="px-3 py-3 text-center border-l border-gray-50">
+                          <td className="px-1 py-3 text-center border-l border-gray-50">
                             <span className={getDateStatusClass(v.rovinieta_expiry)}>
-                              {v.rovinieta_expiry ? dayjs(v.rovinieta_expiry).format('DD.MM.YY') : '-'}
+                              {v.rovinieta_expiry ? dayjs(v.rovinieta_expiry).format('DD.MM') : '-'}
                             </span>
                           </td>
-                          <td className="px-2 py-3 text-center font-mono text-[10px] text-gray-500">
+                          <td className="px-1 py-3 text-center font-mono text-[9px] text-gray-500">
                             {v.rovinieta_expiry ? `${dayjs(v.rovinieta_expiry).diff(dayjs(), 'day')}d` : '-'}
                           </td>
 
                           {/* ITP */}
-                          <td className="px-3 py-3 text-center border-l border-gray-50">
+                          <td className="px-1 py-3 text-center border-l border-gray-50">
                             <span className={getDateStatusClass(v.itp_expiry)}>
-                              {v.itp_expiry ? dayjs(v.itp_expiry).format('DD.MM.YY') : '-'}
+                              {v.itp_expiry ? dayjs(v.itp_expiry).format('DD.MM') : '-'}
                             </span>
                           </td>
-                          <td className="px-2 py-3 text-center font-mono text-[10px] text-gray-500">
+                          <td className="px-1 py-3 text-center font-mono text-[9px] text-gray-500">
                             {v.itp_expiry ? `${dayjs(v.itp_expiry).diff(dayjs(), 'day')}d` : '-'}
                           </td>
 
                           {/* RCA */}
-                          <td className="px-3 py-3 text-center border-l border-gray-50">
+                          <td className="px-1 py-3 text-center border-l border-gray-50">
                             <span className={getDateStatusClass(v.rca_expiry)}>
-                              {v.rca_expiry ? dayjs(v.rca_expiry).format('DD.MM.YY') : '-'}
+                              {v.rca_expiry ? dayjs(v.rca_expiry).format('DD.MM') : '-'}
                             </span>
                           </td>
-                          <td className="px-2 py-3 text-center font-mono text-[10px] text-gray-500">
+                          <td className="px-1 py-3 text-center font-mono text-[9px] text-gray-500">
                             {v.rca_expiry ? `${dayjs(v.rca_expiry).diff(dayjs(), 'day')}d` : '-'}
                           </td>
 
                           {/* CASCO */}
-                          <td className="px-3 py-3 text-center border-l border-gray-50">
+                          <td className="px-1 py-3 text-center border-l border-gray-50">
                             <span className={getDateStatusClass(v.casco_expiry)}>
-                              {v.casco_expiry ? dayjs(v.casco_expiry).format('DD.MM.YY') : '-'}
+                              {v.casco_expiry ? dayjs(v.casco_expiry).format('DD.MM') : '-'}
                             </span>
                           </td>
-                          <td className="px-2 py-3 text-center font-mono text-[10px] text-gray-500">
+                          <td className="px-1 py-3 text-center font-mono text-[9px] text-gray-500">
                             {v.casco_expiry ? `${dayjs(v.casco_expiry).diff(dayjs(), 'day')}d` : '-'}
                           </td>
 
                           {/* Revizie */}
-                          <td className="px-3 py-3 text-center border-l border-gray-50">
+                          <td className="px-1 py-3 text-center border-l border-gray-50">
                             <span className={getDateStatusClass(v.data_revizie)}>
-                              {v.data_revizie ? dayjs(v.data_revizie).format('DD.MM.YY') : '-'}
+                              {v.data_revizie ? dayjs(v.data_revizie).format('DD.MM') : '-'}
                             </span>
                           </td>
-                          <td className="px-2 py-3 text-center font-mono text-[10px] text-gray-500">
+                          <td className="px-1 py-3 text-center font-mono text-[9px] text-gray-500">
                             {v.data_revizie ? `${dayjs(v.data_revizie).diff(dayjs(), 'day')}d` : '-'}
+                          </td>
+
+                          {/* Action */}
+                          <td className="px-1 py-3 text-center">
+                            <button 
+                              onClick={() => { setEditingVehicle(v); setActiveTab('add'); }}
+                              className="p-1 text-gray-400 hover:text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity"
+                            >
+                              <Edit3 className="w-3.5 h-3.5" />
+                            </button>
                           </td>
                         </tr>
                       ))}
