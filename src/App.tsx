@@ -62,6 +62,20 @@ interface Vehicle {
 
 const API_URL = '/api';
 
+const getDateStatusClass = (dateStr: string) => {
+  if (!dateStr) return 'text-gray-400';
+  const expirationDate = dayjs(dateStr);
+  const today = dayjs();
+  
+  if (expirationDate.isBefore(today)) {
+    return 'text-red-600 font-bold bg-red-50 px-2 py-0.5 rounded';
+  }
+  if (expirationDate.isBefore(today.add(30, 'day'))) {
+    return 'text-amber-600 font-bold bg-amber-50 px-2 py-0.5 rounded';
+  }
+  return 'text-green-600 font-medium px-2 py-0.5';
+};
+
 export default function App() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [activeTab, setActiveTab] = useState<'dashboard' | 'fleet' | 'alerts' | 'add'>('dashboard');
@@ -323,55 +337,60 @@ export default function App() {
               <StatCard label="Autoturisme" value={stats.autoturisme} icon={<Car className="text-green-600" />} color="green" />
               <StatCard label="Autoutilitare" value={stats.autoutilitare} icon={<Fuel className="text-purple-600" />} color="purple" />
               
-              <div className="md:col-span-2 lg:col-span-3 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+              <div className="md:col-span-2 lg:col-span-4 bg-white p-6 rounded-2xl border border-gray-200 shadow-sm mt-6">
                 <h3 className="font-bold text-lg mb-6 flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-blue-600" />
-                  Activitate Recentă & Alerte Imediate
+                  <FileText className="w-5 h-5 text-blue-600" />
+                  Status Documente Parc Auto
                 </h3>
-                {expiringDocuments.length === 0 ? (
-                  <div className="text-center py-12 text-gray-500">
-                    <CheckCircle2 className="w-12 h-12 mx-auto mb-4 text-green-500 opacity-50" />
-                    <p>Toate documentele sunt la zi!</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {expiringDocuments.slice(0, 5).map((alert, i) => (
-                      <div key={i} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-blue-200 transition-colors">
-                        <div className="flex items-center gap-4">
-                          <div className={`p-2 rounded-lg ${
-                            alert.type === 'rovinieta' ? 'bg-blue-100 text-blue-600' :
-                            alert.type === 'itp' ? 'bg-purple-100 text-purple-600' :
-                            alert.type === 'rca' ? 'bg-green-100 text-green-600' :
-                            alert.type === 'casco' ? 'bg-amber-100 text-amber-600' :
-                            'bg-red-100 text-red-600'
-                          }`}>
-                            <FileText className="w-5 h-5" />
-                          </div>
-                          <div>
-                            <p className="font-bold text-sm">{alert.vehicle.nr_inmatriculare} - {alert.doc}</p>
-                            <p className="text-xs text-gray-500">{alert.vehicle.marca_model}</p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-sm font-semibold text-red-600 whitespace-nowrap">
-                            Expiră pe {dayjs(alert.date).format('DD MMM YYYY')}
-                          </p>
-                          <p className="text-xs text-gray-400">
-                            în {dayjs(alert.date).diff(dayjs(), 'day')} zile
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                    {expiringDocuments.length > 5 && (
-                      <button 
-                        onClick={() => setActiveTab('alerts')}
-                        className="w-full py-2 text-sm text-blue-600 font-medium hover:underline"
-                      >
-                        Vezi toate alertele (+{expiringDocuments.length - 5})
-                      </button>
-                    )}
-                  </div>
-                )}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm">
+                    <thead className="bg-gray-50 border-b border-gray-100">
+                      <tr>
+                        <th className="px-4 py-3 font-bold text-gray-500 uppercase text-[10px]">Vehicul</th>
+                        <th className="px-4 py-3 font-bold text-gray-500 uppercase text-[10px]">Rovinietă</th>
+                        <th className="px-4 py-3 font-bold text-gray-500 uppercase text-[10px]">ITP</th>
+                        <th className="px-4 py-3 font-bold text-gray-500 uppercase text-[10px]">RCA</th>
+                        <th className="px-4 py-3 font-bold text-gray-500 uppercase text-[10px]">CASCO</th>
+                        <th className="px-4 py-3 font-bold text-gray-500 uppercase text-[10px]">Revizie</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100">
+                      {vehicles.map(v => (
+                        <tr key={v.id} className="hover:bg-gray-50/50 transition-colors">
+                          <td className="px-4 py-3">
+                            <p className="font-bold">{v.nr_inmatriculare}</p>
+                            <p className="text-[10px] text-gray-400 uppercase">{v.marca_model}</p>
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className={getDateStatusClass(v.rovinieta_expiry)}>
+                              {v.rovinieta_expiry ? dayjs(v.rovinieta_expiry).format('DD.MM.YY') : '-'}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className={getDateStatusClass(v.itp_expiry)}>
+                              {v.itp_expiry ? dayjs(v.itp_expiry).format('DD.MM.YY') : '-'}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className={getDateStatusClass(v.rca_expiry)}>
+                              {v.rca_expiry ? dayjs(v.rca_expiry).format('DD.MM.YY') : '-'}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className={getDateStatusClass(v.casco_expiry)}>
+                              {v.casco_expiry ? dayjs(v.casco_expiry).format('DD.MM.YY') : '-'}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className={getDateStatusClass(v.data_revizie)}>
+                              {v.data_revizie ? dayjs(v.data_revizie).format('DD.MM.YY') : '-'}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </motion.div>
           )}
